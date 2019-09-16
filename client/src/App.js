@@ -9,7 +9,8 @@ import Movie from "./Movies/Movie";
 const App = () => {
   const [savedList, setSavedList] = useState([]);
 
-  const addToSavedList = movie => {
+  const addToSavedList = (e, movie) => {
+    e.preventDefault();
     setSavedList([...savedList, movie]);
   };
 
@@ -17,7 +18,13 @@ const App = () => {
     <div>
       <SavedList list={savedList} />
       <Navigation />
-      <Route path="/" exact={true} component={MovieList} />
+      <Route
+        render={props => (
+          <MovieList {...props} addToSavedList={addToSavedList} />
+        )}
+        path="/"
+        exact={true}
+      />
       <Route path="/movie/:id" component={Movie} />
     </div>
   );

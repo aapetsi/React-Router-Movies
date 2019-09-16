@@ -5,6 +5,7 @@ import MovieCard from "./MovieCard";
 
 const MovieList = props => {
   const [movies, setMovies] = useState([]);
+  console.log(props.addToSavedList);
   useEffect(() => {
     const getMovies = () => {
       axios
@@ -23,13 +24,17 @@ const MovieList = props => {
   return (
     <div className="movie-list">
       {movies.map(movie => (
-        <MovieDetails key={movie.id} movie={movie} />
+        <MovieDetails
+          handleClick={props.addToSavedList}
+          key={movie.id}
+          movie={movie}
+        />
       ))}
     </div>
   );
 };
 
-function MovieDetails({ movie }) {
+function MovieDetails({ movie, handleClick }) {
   const { id, title, director, metascore, stars } = movie;
   return (
     <div className="movie-card">
@@ -51,6 +56,7 @@ function MovieDetails({ movie }) {
             {star}
           </div>
         ))}
+        <button onClick={handleClick}>Save Movie</button>
       </Link>
     </div>
   );
